@@ -1,0 +1,74 @@
+/*************************************************************\
+ *                      C Library                            *
+\*************************************************************/
+#include <stdio.h>  /*  printf() fscanf() fopen(), 
+                        fclose, fgetc, fputs, fgetpos, feof 
+                    */
+#include <stdlib.h> /* 
+                    atoi(char*) double atof() int rand() srand(int seed)
+                      malloc() calloc() free() exit() system() */
+#include <string.h> // NULL, strcat(B,A) int strcmp() strlen()
+#include <ctype.h> // isalnum(char) isalpha(char) isdigit(char) isupper(char) tolower()
+#include <time.h> // ctime(time(0))
+#include <math.h> // pow(x,e) sqrt() sin() acos() tanh()
+
+#define GRAV 9.8
+#define RADTODEG(x) ((x) * 57.29578)
+
+int main(argc,argv)
+int argc;
+char **argv;
+{
+   
+   int i, j, k;
+   const double bar = 3.141592;
+   char* line;
+   int array[] = {'1','2','3'};
+   char *array2 = "test";
+   
+   FILE *fp1;
+   argc--; argv++;
+   line = *argv;
+   fp1=fopen(foobar,"rb");
+   
+   int *ptr = malloc(10 * sizeof(*ptr)); // *ptr == int, just cleaner
+   char *word = calloc(200, sizeof(char)); // 200 x char
+   // Remember to check if malloc returned NULL 
+   // after allocation and always free memory!
+   
+   FILE *fin;
+   FILE *fout;
+   
+   fin = fopen("input.txt", "r");
+   fout = fopen("output.txt", "w");
+   
+   fscanf(fin, "%c", &foobar); // stores first arg2 in file into arg3
+   fprintf(fout, "%s", array2); // non-string variables require '&'
+   
+   fclose(fin); fclose(fout);
+   //printf();
+   
+   k = 1;
+   if (k <= 10)
+      k++;
+   else{
+      while(1)
+      {
+         k *= 5; // k = k * 5;
+         k %= 3;
+         break; // this terminates the loop
+      }
+   }
+   
+   do
+   {
+      for (i = 0; i < 5; i++){
+         continue; // skips the rest of the loop body, loops
+         k = 9;
+      }
+   }while(0); // always executes once
+   
+   
+   system("PAUSE");
+   return 0;
+}
