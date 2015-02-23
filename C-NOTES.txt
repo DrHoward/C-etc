@@ -1,74 +1,133 @@
 /*************************************************************\
- *                      C Library                            *
+ *                         C Library                         *
 \*************************************************************/
-#include <stdio.h>  /*  printf() fscanf() fopen(), 
-                        fclose, fgetc, fputs, fgetpos, feof 
-                    */
-#include <stdlib.h> /* 
-                    atoi(char*) double atof() int rand() srand(int seed)
-                      malloc() calloc() free() exit() system() */
-#include <string.h> // NULL, strcat(B,A) int strcmp() strlen()
+
+#include <stdio.h>  /* standard buffered input/output */
+
+// int printf(const char *format, ...); // print formatted output
+// int fprintf(FILE *stream, const char *format, ...); // print formatted output
+
+// FILE *fopen(const char *restrict filename, const char *restrict mode); // open a stream
+// int fclose(FILE *stream); // close a stream
+// int feof(FILE *stream); // test end-of-file indicator on a stream
+
+// int getchar(void); // get a byte from a stdin stream
+// int fgetc(FILE *stream); // get a byte from a stream
+// char *fgets(char *restrict s, int n, FILE *restrict stream); // get a string from a stream
+
+// int fputc(int c, FILE *stream); // put a byte on a stream
+// int fputs(const char *restrict s, FILE *restrict stream); // put a string on a stream
+
+// int fgetpos(FILE *stream, fpos_t *pos); // get current file position information
+// int fsetpos(FILE *stream, const fpos_t *pos); // set current file position
+
+	
+#include <stdlib.h>  /* conversion, memory, process control, sort and search, mathematics */
+
+// int atoi(const char *str); // string to integer
+// double atof(const char *str); // convert a string to a double
+
+// int rand(void); // pseudo-random number generator
+// void srand(unsigned seed); // sets seed for random number generator
+
+// void *malloc(size_t size); // faster memory allocator - garbage values
+// void *calloc(size_t nelem, size_t elsize); // slower memory allocator - initializes 0s
+// void *realloc(void *ptr, size_t size); // memory reallocator
+// void free(void *ptr); // free allocated memory
+
+// void exit(int status); // 0, EXIT_SUCCESS, EXIT_FAILURE
+// int system(const char *command); // Execute system command
+
+
+#include <string.h>  /* string operations */
+
+// size_t strlen(const char *s); // get string length
+// char *strcat(char *s1, const char *s2); // concatenate two strings
+// int strcmp(const char *s1, const char *s2); // compare two strings
+// char *strstr(const char *s1, const char *s2); // find a substring
+
+
+#include <time.h>  /* */
+
+// char *ctime_r(const time_t *clock, char *buf); // convert time value to date and time string
+
+// time_t time(time_t *tloc); // get time
+// struct tm *localtime(const time_t *timer); // convert a time value to a local time
+// char *asctime(const struct tm *timeptr); // convert date and time to a string
+
 #include <ctype.h> // isalnum(char) isalpha(char) isdigit(char) isupper(char) tolower()
-#include <time.h> // ctime(time(0))
 #include <math.h> // pow(x,e) sqrt() sin() acos() tanh()
 
 #define GRAV 9.8
 #define RADTODEG(x) ((x) * 57.29578)
 
-int main(argc,argv)
-int argc;
-char **argv;
+int main // (int argc, char **argv)
 {
-   
-   int i, j, k;
-   const double bar = 3.141592;
-   char* line;
-   int array[] = {'1','2','3'};
-   char *array2 = "test";
-   
-   FILE *fp1;
-   argc--; argv++;
-   line = *argv;
-   fp1=fopen(foobar,"rb");
-   
-   int *ptr = malloc(10 * sizeof(*ptr)); // *ptr == int, just cleaner
-   char *word = calloc(200, sizeof(char)); // 200 x char
-   // Remember to check if malloc returned NULL 
-   // after allocation and always free memory!
-   
-   FILE *fin;
-   FILE *fout;
-   
-   fin = fopen("input.txt", "r");
-   fout = fopen("output.txt", "w");
-   
-   fscanf(fin, "%c", &foobar); // stores first arg2 in file into arg3
-   fprintf(fout, "%s", array2); // non-string variables require '&'
-   
-   fclose(fin); fclose(fout);
-   //printf();
-   
-   k = 1;
-   if (k <= 10)
-      k++;
-   else{
-      while(1)
-      {
-         k *= 5; // k = k * 5;
-         k %= 3;
-         break; // this terminates the loop
-      }
-   }
-   
-   do
-   {
-      for (i = 0; i < 5; i++){
-         continue; // skips the rest of the loop body, loops
-         k = 9;
-      }
-   }while(0); // always executes once
-   
-   
-   system("PAUSE");
-   return 0;
+	// Declarations
+	int i, j, k;
+	const double bar = 3.141592;
+	char* line;
+	int array[] = {'1','2','3'};
+	char *array2 = "test";
+	
+
+	// File I/O
+	FILE *fin;
+	FILE *fout;
+	fin = fopen("input.txt", "r");
+	fout = fopen("output.txt", "w");
+	fscanf(fin, "%c", &foobar); // all non-string variables require '&' for scanf
+	fprintf(fout, "%s", array2); 
+	fclose(fin); fclose(fout);
+	
+	
+	// Conditional Statements
+	k = 1;
+	if (k <= 10)
+		k++;
+	else{
+		while(1)
+		{
+			k *= 5; // k = k * 5;
+			k %= 3; // k = k % 3;
+			break; // terminates the loop
+		}
+	}
+
+	int i; // C89 doesn't allow declarations inside the for loop
+	for (i=0; i<20; i++){
+		printf("%d", i);
+	}
+	
+	do{
+		for (i = 0; i < 5; i++){
+			continue; // skips the rest of the loop body and loops again
+			k = 9;
+		}
+	}while(0); // always executes once
+	
+	
+	// Randomization
+	srand(time(NULL)); // NULL declarations require stdio.h/stdlib.h/etc - pick one
+	int r = rand() % 20; // random number 0-19
+	
+	
+	// Time
+	time_t curtime;
+	struct tm *loctime;
+
+	curtime = time(NULL);
+	loctime = localtime(&curtime);
+	fputs(asctime(loctime), stdout);
+	
+	
+	// Memory Allocation
+	int *ptr = malloc(10 * sizeof(*ptr)); // *ptr == int, just cleaner
+	char *word = calloc(200, sizeof(char)); // 200 x char
+	// Remember to check if malloc returned NULL 
+	// after allocation and always free memory!
+	
+	
+	//system("PAUSE"); // platform-dependent: do NOT use!
+	return 0;
 }
